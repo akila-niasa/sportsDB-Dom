@@ -1,20 +1,35 @@
 
 const loadPlayers=()=>{
     document.getElementById("sppiner").style.display="block"
-    const inputField=document.getElementById("input-field").value
+    if(document.getElementById("input-field").value==''){
+        document.getElementById("sppiner").style.display="none"
+        document.getElementById("error-msg").textContent='please enter a name'
+        document.getElementById("payer-list").innerHTML=''
+    }
+    else{
+        const inputField=document.getElementById("input-field").value
     const url=`https://www.thesportsdb.com/api/v1/json/2/searchplayers.php?p=${inputField}`
     fetch(url)
     .then(res=>res.json())
     .then(data=>displayPlayer(data.player))
-   
-    document.getElementById("sppiner").style.display="none"
+    document.getElementById("input-field").value=''
+    document.getElementById("sppiner").style.
+    display="none"
+    }
 }
 const displayPlayer=(players)=>{
     console.log(players);
-    document.getElementById("input-field").value=''
+  
     document.getElementById("payer-list").innerHTML=''
+    // document.getElementById("right-side").innerHTML=''
     if(players==null){
         document.getElementById("sppiner").style.display="block"
+        
+     setTimeout(() => {
+        const error=document.getElementById("error-msg")
+       error.textContent='not found any players'
+       document.getElementById("sppiner").style.display="none"
+    }, 1000);
     }
     for(const player of players){
         // console.log(player);
@@ -22,7 +37,7 @@ const displayPlayer=(players)=>{
         const div=document.createElement("div")
         div.innerHTML=`
         <div class="card" style="width: 18rem;">
-  <img src="${player.strThumb?player.strThumb:'not found'}" class="card-img-top w-75" alt="...">
+  <img src="${player.strThumb}" class="card-img-top w-75" alt="${player.strThumb?player.strThumb:'not found'}">
   <div class="card-body">
   <h1>Name:${player.strPlayer}</h1>
     <h5>Nationality:${player.strNationality}</h5>
@@ -76,6 +91,5 @@ playerDetail.appendChild(div)
 const deleteButton=(e)=>{
     // console.log(e.parentNode.parentNode.parentNode);
     e.parentNode.parentNode.style.display="none"
-    document.getElementById("player-detail").innerHTML=''
-    document.getElementById("image").innerHTML=''
+    document.getElementById("right-side").innerHTML=''
 }
