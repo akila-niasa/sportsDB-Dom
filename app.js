@@ -31,24 +31,27 @@ const displayPlayer=(players)=>{
        document.getElementById("sppiner").style.display="none"
     }, 1000);
     }
-    for(const player of players){
-        // console.log(player);
-        const playerList=document.getElementById("payer-list")
-        const div=document.createElement("div")
-        div.innerHTML=`
-        <div class="card" style="width: 18rem;">
-  <img src="${player.strThumb}" class="card-img-top w-75" alt="${player.strThumb?player.strThumb:'not found'}">
-  <div class="card-body">
-  <h1>Name:${player.strPlayer}</h1>
+ 
+   for(const player of players){
+    // console.log(player);
+  
+    const playerList=document.getElementById("payer-list")
+    const div=document.createElement("div")
+    div.innerHTML=  player.strThumb?`  <div class="card" style="width: 18rem;">
+    <img src="${player.strThumb}" class="card-img-top w-75" alt="">
+    <div class="card-body">
+    <h1>Name:${player.strPlayer}</h1>
     <h5>Nationality:${player.strNationality}</h5>
-
+    
     <button onclick="deleteButton(this)"class="btn-danger">delete</button>
     <button onclick="loadDetail('${player.idPlayer}')"  class="btn-primary">details</button>
-
-  </div>
-</div>`
+    
+    </div>
+    </div>`:''
+  
 playerList.appendChild(div)
-    }
+    
+}
 }
 const loadDetail=(info)=>{
     console.log(info)
